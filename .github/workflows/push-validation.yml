@@ -53,21 +53,21 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Cache node modules
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.npm
-            node_modules
-            */*/node_modules
-          key: PUSH-TEST-${{ runner.os }}-${{matrix.node-version}}-${{matrix.package.package}}-${{ hashFiles(format('{0}/package-lock.json',matrix.package.path)) }}
-          restore-keys: |
-            PUSH-TEST-${{ runner.os }}-${{matrix.node-version}}-${{matrix.package.package}}-
-            PUSH-TEST-${{ runner.os }}-${{matrix.node-version}}-
-            PUSH-TEST-${{ runner.os }}-
+      # - name: Cache node modules
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       ~/.npm
+      #       node_modules
+      #       */*/node_modules
+      #     key: PUSH-TEST-${{ runner.os }}-${{matrix.node-version}}-${{matrix.package.package}}-${{ hashFiles(format('{0}/package-lock.json',matrix.package.path)) }}
+      #     restore-keys: |
+      #       PUSH-TEST-${{ runner.os }}-${{matrix.node-version}}-${{matrix.package.package}}-
+      #       PUSH-TEST-${{ runner.os }}-${{matrix.node-version}}-
+      #       PUSH-TEST-${{ runner.os }}-
 
       - name: Install Node.js dependencies
-        run: npm ci --cache ~/.npm --prefer-offline --only=production --silent
+        run: npm ci --only=production --silent
 
       - name: Install package dependencies
         id: install
